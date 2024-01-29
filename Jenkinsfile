@@ -11,5 +11,23 @@ pipeline{
                   bat 'mvn package'
               }
           }
+          stage('Upload-Nexus-Artifact'){		  
+              steps{		  
+                  nexusArtifactUploader artifacts: [
+                    [
+                        artifactId: 'HelloSpringBoot', 
+                        classifier: '', 
+                        file: 'HelloSpringBoot-0.0.1-SNAPSHOT.jar', 
+                        type: 'jar'
+                    ]], 
+                        credentialsId: 'Nexus-Cred', 
+                        groupId: 'com.example', 
+                        nexusUrl: '65.0.23.242:8081', 
+                        nexusVersion: 'nexus3', 
+                        protocol: 'http', 
+                        repository: 'Rawat-Maven-Repo', 
+                        version: '0.0.1-SNAPSHOT'
+              }
+          }
       }
 }
