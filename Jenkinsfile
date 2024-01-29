@@ -17,7 +17,7 @@ pipeline{
                     [
                         artifactId: 'HelloSpringBoot', 
                         classifier: '', 
-                        file: 'D:\\data\\jenkins_home\\workspace\\maven-spring-nexus\\HelloSpringBoot-0.0.1-SNAPSHOT.jar', 
+                        file: 'D:\\data\\jenkins_home\\workspace\\maven-spring-nexus\\target\\HelloSpringBoot-0.0.1-SNAPSHOT.jar', 
                         type: 'jar'
                     ]], 
                         credentialsId: 'Nexus-Cred', 
