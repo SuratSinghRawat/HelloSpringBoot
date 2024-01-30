@@ -19,7 +19,7 @@ pipeline{
                 }
             }
         }
-      /*  stage("Deploy Image"){
+        stage("Deploy Image on Nexus"){
             steps{
                 script{
                     docker.withRegistry('http://'+registry, registryCredentials){
@@ -28,6 +28,6 @@ pipeline{
                     }
                 }
             }
-        } */  
+        }
       }
 }
