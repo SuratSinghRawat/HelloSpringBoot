@@ -1,33 +1,33 @@
 pipeline{   
 	agent any
+    environment {
+        imageName = "mvn-hello-spring"
+        registryCredentials = "Nexus-Cred" 
+        registry="ec2-65-0-23-242.ap-south-1.compute.amazonaws.com:8082/"
+        dockerImage = ''
+            }
       stages{           
-          stage('Compile'){             
-              steps{
-                  bat 'mvn compile'
-	               }
-          }
-          stage('Package'){		  
+        stage('Package'){		  
               steps{		  
                   bat 'mvn package'
               }
-          }
-          stage('Upload-Nexus-Artifact'){		  
-              steps{		  
-                  nexusArtifactUploader artifacts: [
-                    [
-                        artifactId: 'HelloSpringBoot', 
-                        classifier: '', 
-                        file: 'D:\\data\\jenkins_home\\workspace\\maven-spring-nexus\\target\\HelloSpringBoot-0.0.1-SNAPSHOT.jar', 
-                        type: 'jar'
-                    ]], 
-                        credentialsId: 'Nexus-Cred', 
-                        groupId: 'com.example', 
-                        nexusUrl: '65.0.23.242:8081', 
-                        nexusVersion: 'nexus3', 
-                        protocol: 'http', 
-                        repository: 'Rawat-Maven-Repo', 
-                        version: '0.0.1-SNAPSHOT'
-              }
-          }
+        }
+        stage("building Image"){
+            steps{
+                script{
+                   dockerImage = docker.build imageName
+                }
+            }
+        }
+      /*  stage("Deploy Image"){
+            steps{
+                script{
+                    docker.withRegistry('http://'+registry, registryCredentials){
+                    dockerImage.push("${env.BUILD_NUMBER}")
+                    
+                    }
+                }
+            }
+        } */  
       }
 }
